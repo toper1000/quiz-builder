@@ -1,0 +1,25 @@
+{
+  "title": "World Geography",
+  "questions": [
+    {
+      "type": "BOOLEAN",
+      "text": "Mount Everest is the highest mountain above sea level.",
+      "correctBoolean": true
+    },
+    {
+      "type": "INPUT",
+      "text": "What is the capital city of Australia?",
+      "correctText": "Canberra"
+    },
+    {
+      "type": "CHECKBOX",
+      "text": "Which of these countries are in South America?",
+      "options": [
+        { "text": "Peru", "isCorrect": true },
+        { "text": "Chile", "isCorrect": true },
+        { "text": "Kenya", "isCorrect": false },
+        { "text": "Norway", "isCorrect": false }
+      ]
+    }
+  ]
+}

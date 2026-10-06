@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum QuestionType {
+  BOOLEAN
+  INPUT
+  CHECKBOX
+}
+
+model Quiz {
+  id        String     @id @default(uuid()) @db.Uuid
+  title     String     @db.VarChar(200)
+  createdAt DateTime   @default(now()) @map("created_at") @db.Timestamptz(3)
+  questions Question[]
+
+  @@index([createdAt])
+  @@map("quizzes")
+}
+
+model Question {
+  id             String       @id @default(uuid()) @db.Uuid
+  quizId         String       @map("quiz_id") @db.Uuid
+  order          Int
+  type           QuestionType
+  text           String       @db.VarChar(500)
+  correctBoolean Boolean?     @map("correct_boolean")
+  correctText    String?      @map("correct_text") @db.VarChar(200)
+  quiz           Quiz         @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  options        Option[]
+
+  @@unique([quizId, order])
+  @@map("questions")
+}
+
+model Option {
+  id         String   @id @default(uuid()) @db.Uuid
+  questionId String   @map("question_id") @db.Uuid
+  order      Int
+  text       String   @db.VarChar(200)
+  isCorrect  Boolean  @default(false) @map("is_correct")
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@unique([questionId, order])
+  @@map("options")
+}
